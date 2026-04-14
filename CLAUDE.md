@@ -1,98 +1,119 @@
-# 🎯 TradingView Claude MCP: BTCUSDT.P Liquidity Sniper (20x)
+# TradingView Claude MCP: BTCUSDT.P Liquidity Sniper (20x)
 
-> ⚠️ **تنبيه هام جداً:** هذه الاستراتيجية مخصصة ومصممة حصرياً للعمل مع بيئة **`TRADING VIEW CLAUDE MCP`**. يجب على الذكاء الاصطناعي الالتزام بهذه القواعد ميكانيكياً عند طلب تحليل منصة TradingView والتعامل مع بياناتها.
-
----
-
-## 📊 معلومات الاستراتيجية
-- **الأصل المالي:** BTCUSDT.P (بيتكوين عقود آجلة Perpetual) فقط.
-- **الرافعة المالية:** 20x (مخاطرة عالية تتطلب دقة قناص، حركة 5% تعني التصفية).
-- **حجم الدخول (المارجن):** 25% من إجمالي رأس المال لكل صفقة.
-- **نوع التداول:** صيد السيولة (Liquidation Sweeps) والاسكالبينج الاحترافي.
-
-## ⏱️ الفريمات الزمنية المستخدمة (عبر MCP)
-1. **1H (الساعة):** لتصفية الاتجاه العام ومعرفة الهيكلة (Market Structure).
-2. **15m (ربع ساعة):** لتحديد مناطق السيولة العالية (القمم والقيعان السابقة / Order Blocks المشبعة بالستوبات).
-3. **5m أو 3m:** فريم التنفيذ والمراقبة اللحظية للبرايس أكشن لرصد (الكسر الوهمي والتلاعب).
-
-## 🛠️ المؤشرات والتأكيدات لـ TradingView
-- **VWAP (على فريم 15m):** لتحديد وتعيين أهداف جني الأرباح (TP) كمناطق انجذاب سيولة.
-- **Volume indicator:** ضروري لتأكيد التلاعب (Fakeout). كسر القاع/القمة يجب أن يكون مصحوباً بفوليوم عالي لضمان ضرب الستوبات وتفريغ البيع/الشراء.
-- **EMA 200 (على فريم 1H):** فلتر الاتجاه (سعر فوق الـ EMA = نركز على فرص Long والعكس).
-- **ATR 14 (على فريم 5m):** لقياس تقلبات السوق (Volatility). يُستخدم لتحديد مسافة وقف الخسارة بحيث تتناسب مع حركة السعر الحالية لتجنب الضرب العشوائي، بشرط ألا يتجاوز حد الـ 0.8% الأقصى.
+> ⚠️ **Important:** This strategy is designed exclusively for **TRADING VIEW CLAUDE MCP**. The AI must follow these rules mechanically when analyzing TradingView data.
 
 ---
 
-## 🟢 شروط الدخول شراء (Long) - صيد السيولة البيعية
-1. **تحديد القاع (15m):** رصد قاع واضح سابق يرتكز عليه المتداولون (السعر شكل دعم).
-2. **ضرب الستوبات (5m):** يقوم السعر بهبوط حاد ويكسر هذا القاع بوضوح لتفعيل ستوبات الأفراد.
-3. **تأكيد الفوليوم:** شمعة الكسر تحتوي على فوليوم مرتفع جداً (Spike) يدل على ذعر وامتصاص صناع السوق.
-4. **الابتلاع (العودة السريعة):** إغلاق شمعة الـ 5m بشكل انعكاسي واضح (Pin bar أو Engulfing) وتعود لتغلق **فوق** مستوى القاع المكسور.
-5. **التنفيذ الفورى:** دخول Long عند إغلاق الشمعة الانعكاسية المستردة للقاع.
+## Account Info
+- **Asset:** BTCUSDT.P (Bitcoin Perpetual Futures) only
+- **Margin per trade:** 25% of total capital
+- **Leverage:** 20x Isolated
+- **Max open trades:** 1 at a time
+- **Platform:** Binance Futures USDT-M
 
-## 🔴 شروط الدخول بيع (Short) - صيد السيولة الشرائية
-1. **تحديد القمة (15m):** رصد قمة واضحة سابقة ارتد السعر منها.
-2. **ضرب الستوبات (5m):** يقوم السعر بصعود مفاجئ ومتعمد لاختراق القمة لتحفيز الشراء وضرب ستوبات البيع.
-3. **تأكيد الفوليوم:** فوليوم عالي لحظة الاختراق.
-4. **الابتلاع (العودة السريعة):** شمعة الـ 5m تترك ذيل طويل للأعلى وتعود لتغلق **تحت** خط القمة التي تم اختراقها.
-5. **التنفيذ الفورى:** دخول Short عند إغلاق الشمعة المؤكدة للفخ.
+## Timeframes
+- **1H:** Determine the main trend direction (above or below EMA 200)
+- **15m:** Identify liquidity zones (previous highs/lows loaded with stop losses)
+- **5m:** Execution frame — wait for the fakeout and reversal candle here
 
----
-
-## 🛡️ إدارة المخاطر لرافعة 20x (صارمة وغير قابلة للتعديل)
-- **وقف الخسارة (Stop Loss):** يوضع فوراً (أسفل ذيل النزول للـ Long / أو أعلى ذيل الصعود للـ Short). 
-- 🚫 **شرط الستوب:** أقصى مسافة مسموحة لوقف الخسارة هي **0.8%** من سعر الدخول (أي خسارة 16% من المرجن في أسوأ الأحوال). إذا كان طول الشمعة يتطلب ستوب أكبر من 0.8%، **تُلغى الصفقة فوراً**.
-- **تأمين الصفقة (Breakeven):** بمجرد أن يتحرك السعر بنسبة **+0.5%** لصالح الشراء/البيع، يُنقل أمر الوقف حصراً لنقطة الدخول (لا نسمح بتحول صفقة رابحة إلى خاسرة).
-- **جني الأرباح (TP - أهداف مقسمة):** 
-  - **TP1:** عند خط الـ VWAP الساري (يتم إغلاق 50% من الكمية).
-  - **TP2:** القمة أو القاع المقابل المعاكس للهيكلة (يتم إغلاق الـ 50% المتبقية).
-
-## 🚨 قواعد الأمان اليومية (غير قابلة للكسر)
-- ❌ أقصى خسارة يومية: صفقتين خاسرتين فقط — بعدها توقف لليوم التالي
-- ❌ أقصى خسارة أسبوعية: 15% من رأس المال — بعدها توقف للأسبوع
-- ❌ لا تعيد الدخول في نفس الصفقة إذا ضرب الوقف
-- ❌ لا توسّع وقف الخسارة أبداً
-
-## ⏰ أوقات التداول المسموحة (توقيت مكة UTC+3)
-
-| الفترة | الوقت | الحالة |
-|--------|-------|--------|
-| الجلسة الأوروبية (لندن) | 10:00 ص - 1:00 م | ✅ مسموح |
-| افتتاح أمريكا (نيويورك) | 4:30 م - 7:30 م | ✅ أفضل فترة (أعلى سيولة) |
-| بعد الظهر أمريكا | 7:30 م - 11:00 م | ✅ مسموح |
-| الجلسة الآسيوية | 4:00 ص - 9:00 ص | ❌ ممنوع فتح صفقات |
-| عطلة نهاية الأسبوع | السبت والأحد | ❌ ممنوع فتح صفقات |
-| قبل CPI/FOMC/NFP/PPI/GDP | ساعتين قبل + ساعة بعد | ❌ ممنوع فتح صفقات |
-
-## 📰 فلتر الأخبار الاقتصادية (إلزامي)
-- ❌ ممنوع فتح صفقات قبل ساعتين وبعد ساعة من: **CPI / FOMC / NFP / PPI / GDP**
-- ⚠️ إذا كانت هناك صفقة مفتوحة وقت الخبر، أمّنها بـ Breakeven أو أغلقها
-- 📅 تحقق يومياً من تقويم الأخبار عبر: [forexfactory.com/calendar](https://www.forexfactory.com/calendar)
+## Indicators
+1. **EMA 200** — on 1H — trend filter (above = Long bias, below = Short bias)
+2. **VWAP** — on 15m — first take profit target (TP1) and price magnet zone
+3. **Volume** — on 5m — confirms the sweep (high volume = stop hunt confirmed)
+4. **ATR 14** — on 5m — measures volatility to size the stop loss, capped at 0.8% max
 
 ---
 
-## 🤖 بروتوكول استجابة الذكاء الاصطناعي (عند طلب التحليل)
-عندما يطلب منك المستخدم (عن طريق TRADING VIEW CLAUDE MCP) مسح الشارت وتقييم فرصة البيتكوين، اتبع هذه الخطوات للرد:
+## 5 Long Entry Conditions (ALL must be met)
 
-1. **الرد يجب أن يكون منظماً باللغة العربية.**
-2. **استخدم أدوات MCP المتاحة لجمع البيانات الحية:**
-   - استخدم `get_ta_summary` لعملة `BINANCE:BTCUSDT.P` على الفريمات `5, 15, 60` لمعرفة إشارة Buy/Sell/Neutral لكل فريم.
-   - استخدم `lookup_symbols` لـ `BINANCE:BTCUSDT.P` لجلب السعر الحالي، التغير اليومي، الفوليوم، وأعلى/أدنى سعر.
-   - استخدم `screen_crypto` مع فلتر RSI لتأكيد حالة التشبع الشرائي/البيعي.
-3. **حلل البيانات المجمّعة** وفقاً لشروط الاستراتيجية (5 شروط Long أو 5 شروط Short).
-4. **أعطِ التقرير بالهيكلة التالية:**
-   - **ملخص الـ TA:** (إشارات الفريمات الثلاثة: 1H / 15m / 5m)
-   - **الفرصة الحالية:** (🟢 دخول Long / 🔴 دخول Short / ⏳ لا توجد فرصة)
-   - **حالة الستوب والسيولة:** (أي قاع/قمة تم ضربها + وضع الفوليوم)
-   - **نقاط التنفيذ (في حال وجود فرصة):**
-     - سعر الدخول: [...]
-     - وقف الخسارة: [...] (مع إثبات أن المسافة ≤ 0.8%)
-     - هدف TP1 (VWAP): [...]
-     - هدف نهاية الحركة TP2: [...]
-5. **ملاحظة الأمان الدائمة:** ذكّر المستخدم باستخدام قواعد التريلينق والبريك إيفن (Breakeven).
+| # | Condition | How to verify |
+|---|-----------|---------------|
+| 1 | 1H trend is bullish | Price is above EMA 200 on the 1H chart |
+| 2 | Liquidity pool identified (15m) | A clear previous low that traders are using as support on 15m |
+| 3 | Stop hunt / Sweep (5m) | Price drops sharply and breaks below the low on 5m, triggering retail stop losses |
+| 4 | High volume on the sweep | The sweep candle (5m) shows a clear volume spike above the 10-candle average |
+| 5 | Reversal candle closes above the low | ⚠️ Wait for the 5m candle to fully close — it must close **above** the broken low with a long wick (Pin Bar or Engulfing) |
 
-## 🧰 أوامر MCP المتقدمة (Slash Commands)
-يمكن للمستخدم استخدام هذه الأوامر الجاهزة مباشرة لتعزيز التحليل:
-- `/macro-dashboard` — لوحة ماكرو شاملة (VIX، الدولار، الذهب، البيتكوين، العوائد)
-- `/market-regime` — تحديد حالة السوق العالمية (Bull / Bear / Correction)
+## 5 Short Entry Conditions (Mirror opposite)
 
+| # | Condition | How to verify |
+|---|-----------|---------------|
+| 1 | 1H trend is bearish | Price is below EMA 200 on the 1H chart |
+| 2 | Liquidity pool identified (15m) | A clear previous high that traders are using as resistance on 15m |
+| 3 | Stop hunt / Sweep (5m) | Price spikes up and breaks above the high on 5m, triggering retail stop losses |
+| 4 | High volume on the sweep | The sweep candle (5m) shows a clear volume spike above the 10-candle average |
+| 5 | Reversal candle closes below the high | ⚠️ Wait for the 5m candle to fully close — it must close **below** the broken high with a long upper wick |
+
+---
+
+## Stop Loss
+- **Long:** Below the lowest wick of the fakeout candle on 5m
+- **Short:** Above the highest wick of the fakeout candle on 5m
+- **Max allowed distance:** **0.8%** from entry price (use ATR 14 to calculate)
+- ⛔ If the distance exceeds 0.8% → cancel the trade — find a better setup
+- ⛔ Stop loss never moves backward — only forward
+
+## Breakeven Rule
+- Once price moves **+0.5%** in your favor → move stop loss to entry price immediately
+- Never let a winning trade turn into a loser
+
+## Take Profit — 2 Stages
+
+| Stage | Target | Close % | What happens next |
+|-------|--------|---------|-------------------|
+| TP1 | VWAP line | Close 50% | Move stop to entry (breakeven) |
+| TP2 | Opposite structure high/low | Close remaining 50% | Trade complete |
+
+---
+
+## Daily Safety Rules (Non-negotiable)
+- ❌ Max daily losses: 2 losing trades — then stop for the day
+- ❌ Max weekly loss: 15% of capital — then stop for the week
+- ❌ Never re-enter the same trade after getting stopped out
+- ❌ Never widen the stop loss under any circumstances
+
+## Allowed Trading Hours (Makkah Time UTC+3)
+
+| Session | Time | Status |
+|---------|------|--------|
+| London (Europe) | 10:00 AM - 1:00 PM | ✅ Allowed |
+| New York Open | 4:30 PM - 7:30 PM | ✅ Best session (highest liquidity) |
+| New York Afternoon | 7:30 PM - 11:00 PM | ✅ Allowed |
+| Asian Session | 4:00 AM - 9:00 AM | ❌ No trading (random chop) |
+| Weekends | Saturday & Sunday | ❌ No trading (low liquidity) |
+| Before CPI/FOMC/NFP/PPI/GDP | 2 hours before + 1 hour after | ❌ No trading |
+
+## News Filter (Mandatory)
+- ❌ No new trades 2 hours before and 1 hour after: **CPI / FOMC / NFP / PPI / GDP**
+- ⚠️ If a trade is open during news, secure it at breakeven or close it
+- 📅 Check daily: [forexfactory.com/calendar](https://www.forexfactory.com/calendar)
+
+---
+
+## AI Response Protocol (When analysis is requested)
+When the user asks (via TRADING VIEW CLAUDE MCP) to scan the chart and evaluate a Bitcoin opportunity, follow these steps:
+
+1. **Response must be organized and in Arabic.**
+2. **Use available MCP tools to gather live data:**
+   - Use `get_ta_summary` for `BINANCE:BTCUSDT.P` on timeframes `5, 15, 60` to get Buy/Sell/Neutral signals per frame.
+   - Use `lookup_symbols` for `BINANCE:BTCUSDT.P` to get current price, daily change, volume, and high/low.
+   - Use `screen_crypto` with RSI filter to confirm overbought/oversold status.
+3. **Analyze the collected data** against the strategy conditions (5 Long or 5 Short conditions).
+4. **Deliver the report in this structure:**
+   - **TA Summary:** (Signals from all 3 timeframes: 1H / 15m / 5m)
+   - **Current Opportunity:** (🟢 Long Entry / 🔴 Short Entry / ⏳ No setup — waiting for liquidity sweep)
+   - **Stop & Liquidity Status:** (Which high/low was swept + volume status)
+   - **Execution Points (if entry exists):**
+     - Entry price: [...]
+     - Stop loss: [...] (with proof that distance ≤ 0.8%)
+     - TP1 target (VWAP): [...]
+     - TP2 target (opposite structure): [...]
+5. **Safety reminder:** Always remind the user to apply trailing stop and breakeven rules.
+
+## Advanced MCP Commands (Slash Commands)
+The user can use these built-in commands to enhance analysis:
+- `/macro-dashboard` — Full macro snapshot (VIX, Dollar, Gold, Bitcoin, Yields)
+- `/market-regime` — Determine global market state (Bull / Bear / Correction)
+
+## Disclaimer
+This is a decision-support tool only — the final call is mine as the trader. Any losses are my personal responsibility.
