@@ -53,3 +53,24 @@
 *   **لا تتداول المشاعر:** الميزة العظمى أنك لا تقرر الدخول، الآلة تقرر بناءً على الحسابات الرياضية الدقيقة للـ ATR والفوليوم.
 *   **احذر الذيل الطويل:** إذا أغلق البيتكوين تاركاً ذيلاً هائلاً يستوجب ستوب لوز بحجم **1.2%** مثلاً، سيخبرك Claude بـ "إلغاء الصفقة" لأنها تجاوزت الحد الأقصى للمخاطرة المسموح بها (0.8%). اطعه فوراً!
 *   **التحديث المستمر:** المنصات تتحرك بالثواني، عندما تسأل كلود في وقت التنفيذ، اطلب منه فحص الشموع الحية المحدثة وليست المخزنة لضمان دقة قرار الستوب لوز.
+
+---
+
+## 🧰 أوامر سرية متقدمة (Slash Commands)
+هذه أوامر مبنية مسبقاً داخل المشروع يمكنك كتابتها مباشرة لـ Claude:
+
+| الأمر | ماذا يفعل | متى تستخدمه |
+|-------|----------|-------------|
+| `/macro-dashboard` | لوحة ماكرو شاملة: VIX، الدولار، الذهب، البيتكوين، العوائد | قبل بداية كل جلسة لمعرفة حالة السوق العالمية |
+| `/market-regime` | تحديد هل السوق Bull أو Bear أو Correction | قبل التداول لمعرفة مستوى المخاطرة العام |
+
+### أوامر إنجليزية متقدمة (للتحليل العميق)
+يمكنك إرسال هذه الأوامر لـ Claude مباشرة:
+> *"Run `get_ta_summary` for `BINANCE:BTCUSDT.P` on timeframes 5, 15, 60. Then run `lookup_symbols` for the same symbol to get current price, volume, and daily change. Summarize the results."*
+
+> *"Run `/macro-dashboard` and tell me: is Bitcoin in Risk-On or Risk-Off mode right now? Should I be cautious today?"*
+
+## 📅 مواقع الأخبار الاقتصادية (تفقدها يومياً قبل التداول)
+- 🔴 [Forex Factory Calendar](https://www.forexfactory.com/calendar) — الأخبار الحمراء = ممنوع التداول
+- 🪙 [CoinMarketCal](https://coinmarketcal.com/en/) — أحداث خاصة بالكريبتو
+- 📱 [Investing.com](https://www.investing.com/economic-calendar/) — تطبيق مع تنبيهات فورية على الجوال
