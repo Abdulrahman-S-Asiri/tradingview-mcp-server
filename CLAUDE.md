@@ -1,147 +1,87 @@
-# CLAUDE.md
+# 🎯 TradingView Claude MCP: BTCUSDT.P Liquidity Sniper (20x)
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+> ⚠️ **تنبيه هام جداً:** هذه الاستراتيجية مخصصة ومصممة حصرياً للعمل مع بيئة **`TRADING VIEW CLAUDE MCP`**. يجب على الذكاء الاصطناعي الالتزام بهذه القواعد ميكانيكياً عند طلب تحليل منصة TradingView والتعامل مع بياناتها.
 
-## Project Overview
+---
 
-TradingView MCP Server is an unofficial Model Context Protocol server **and CLI tool** that provides access to TradingView's market screener API. It enables AI-powered stock, forex, crypto, and ETF screening through Claude Desktop, Claude Code, or the standalone `tradingview-cli` command.
+## 📊 معلومات الاستراتيجية
+- **الأصل المالي:** BTCUSDT.P (بيتكوين عقود آجلة Perpetual) فقط.
+- **الرافعة المالية:** 20x (مخاطرة عالية تتطلب دقة قناص، حركة 5% تعني التصفية).
+- **حجم الدخول (المارجن):** 25% من إجمالي رأس المال لكل صفقة.
+- **نوع التداول:** صيد السيولة (Liquidation Sweeps) والاسكالبينج الاحترافي.
 
-## Build and Development Commands
+## ⏱️ الفريمات الزمنية المستخدمة (عبر MCP)
+1. **1H (الساعة):** لتصفية الاتجاه العام ومعرفة الهيكلة (Market Structure).
+2. **15m (ربع ساعة):** لتحديد مناطق السيولة العالية (القمم والقيعان السابقة / Order Blocks المشبعة بالستوبات).
+3. **5m أو 3m:** فريم التنفيذ والمراقبة اللحظية للبرايس أكشن لرصد (الكسر الوهمي والتلاعب).
 
-```bash
-npm install          # Install dependencies
-npm run build        # Compile TypeScript to dist/
-npm test             # Run all tests
-npm run test:watch   # Run tests in watch mode
-npm run dev          # Run MCP server directly with tsx (no build step)
-npm run dev:cli      # Run CLI directly with tsx (no build step)
-```
+## 🛠️ المؤشرات والتأكيدات لـ TradingView
+- **VWAP (على فريم 15m):** لتحديد وتعيين أهداف جني الأرباح (TP) كمناطق انجذاب سيولة.
+- **Volume indicator:** ضروري لتأكيد التلاعب (Fakeout). كسر القاع/القمة يجب أن يكون مصحوباً بفوليوم عالي لضمان ضرب الستوبات وتفريغ البيع/الشراء.
+- **EMA 200 (على فريم 1H):** فلتر الاتجاه (سعر فوق الـ EMA = نركز على فرص Long والعكس).
+- **ATR 14 (على فريم 5m):** لقياس تقلبات السوق (Volatility). يُستخدم لتحديد مسافة وقف الخسارة بحيث تتناسب مع حركة السعر الحالية لتجنب الضرب العشوائي، بشرط ألا يتجاوز حد الـ 0.8% الأقصى.
 
-### Running a single test file
-```bash
-npm test -- fields.test.ts
-```
+---
 
-### Development workflow
-For local development, use `npm run dev` which runs TypeScript directly via tsx without requiring a build step. After making changes:
-1. Restart Claude to reload the MCP server (no hot-reload)
-2. Test via Claude's MCP integration
+## 🟢 شروط الدخول شراء (Long) - صيد السيولة البيعية
+1. **تحديد القاع (15m):** رصد قاع واضح سابق يرتكز عليه المتداولون (السعر شكل دعم).
+2. **ضرب الستوبات (5m):** يقوم السعر بهبوط حاد ويكسر هذا القاع بوضوح لتفعيل ستوبات الأفراد.
+3. **تأكيد الفوليوم:** شمعة الكسر تحتوي على فوليوم مرتفع جداً (Spike) يدل على ذعر وامتصاص صناع السوق.
+4. **الابتلاع (العودة السريعة):** إغلاق شمعة الـ 5m بشكل انعكاسي واضح (Pin bar أو Engulfing) وتعود لتغلق **فوق** مستوى القاع المكسور.
+5. **التنفيذ الفورى:** دخول Long عند إغلاق الشمعة الانعكاسية المستردة للقاع.
 
-## Architecture
+## 🔴 شروط الدخول بيع (Short) - صيد السيولة الشرائية
+1. **تحديد القمة (15m):** رصد قمة واضحة سابقة ارتد السعر منها.
+2. **ضرب الستوبات (5m):** يقوم السعر بصعود مفاجئ ومتعمد لاختراق القمة لتحفيز الشراء وضرب ستوبات البيع.
+3. **تأكيد الفوليوم:** فوليوم عالي لحظة الاختراق.
+4. **الابتلاع (العودة السريعة):** شمعة الـ 5m تترك ذيل طويل للأعلى وتعود لتغلق **تحت** خط القمة التي تم اختراقها.
+5. **التنفيذ الفورى:** دخول Short عند إغلاق الشمعة المؤكدة للفخ.
 
-### Dual Entry Points
-The package has two entry points sharing all core logic:
+---
 
-**MCP Server** — `src/index.ts`
-Creates the MCP server, registers tools and resources, handles tool calls via stdio. Initializes core components:
-- `TradingViewClient` - API client
-- `Cache` - Response caching (configurable TTL)
-- `RateLimiter` - Request throttling (configurable RPM)
-- `ScreenTool`, `FieldsTool`, `PresetsTool` - Tool implementations
+## 🛡️ إدارة المخاطر لرافعة 20x (صارمة وغير قابلة للتعديل)
+- **وقف الخسارة (Stop Loss):** يوضع فوراً (أسفل ذيل النزول للـ Long / أو أعلى ذيل الصعود للـ Short). 
+- 🚫 **شرط الستوب:** أقصى مسافة مسموحة لوقف الخسارة هي **0.8%** من سعر الدخول (أي خسارة 16% من المرجن في أسوأ الأحوال). إذا كان طول الشمعة يتطلب ستوب أكبر من 0.8%، **تُلغى الصفقة فوراً**.
+- **تأمين الصفقة (Breakeven):** بمجرد أن يتحرك السعر بنسبة **+0.5%** لصالح الشراء/البيع، يُنقل أمر الوقف حصراً لنقطة الدخول (لا نسمح بتحول صفقة رابحة إلى خاسرة).
+- **جني الأرباح (TP - أهداف مقسمة):** 
+  - **TP1:** عند خط الـ VWAP الساري (يتم إغلاق 50% من الكمية).
+  - **TP2:** القمة أو القاع المقابل المعاكس للهيكلة (يتم إغلاق الـ 50% المتبقية).
 
-**CLI** — `src/cli.ts`
-Standalone CLI using Node's built-in `util.parseArgs`. Reuses the same tool classes. Output formats: JSON (default), CSV, table. No `cache.startCleanup()` (CLI is short-lived).
+## 🚨 قواعد الأمان اليومية (غير قابلة للكسر)
+- ❌ أقصى خسارة يومية: صفقتين خاسرتين فقط — بعدها توقف لليوم التالي
+- ❌ أقصى خسارة أسبوعية: 15% من رأس المال — بعدها توقف للأسبوع
+- ❌ لا تعيد الدخول في نفس الصفقة إذا ضرب الوقف
+- ❌ لا توسّع وقف الخسارة أبداً
 
-**CLI Helpers** (`src/cli/`)
-- `parseArgs.ts` - Option configs, input builders, preset merging
-- `formatters.ts` - JSON/CSV/table output formatters
-- `help.ts` - Help text for all commands
+## ⏰ أوقات التداول المسموحة (توقيت مكة UTC+3)
 
-### Core Components
+| الفترة | الوقت | الحالة |
+|--------|-------|--------|
+| الجلسة الأوروبية (لندن) | 10:00 ص - 1:00 م | ✅ مسموح |
+| افتتاح أمريكا (نيويورك) | 4:30 م - 7:30 م | ✅ أفضل فترة (أعلى سيولة) |
+| بعد الظهر أمريكا | 7:30 م - 11:00 م | ✅ مسموح |
+| الجلسة الآسيوية | 4:00 ص - 9:00 ص | ❌ ممنوع فتح صفقات |
+| عطلة نهاية الأسبوع | السبت والأحد | ❌ ممنوع فتح صفقات |
+| قبل CPI/FOMC/NFP/PPI/GDP | ساعتين قبل + ساعة بعد | ❌ ممنوع فتح صفقات |
 
-**API Layer** (`src/api/`)
-- `client.ts` - HTTP client for TradingView scanner API endpoints (`/global/scan`, `/forex/scan`, `/crypto/scan`)
-- `search.ts` - Symbol search via TradingView symbol-search v3 endpoint
-- `metainfo.ts` - Market metainfo via scanner `/metainfo` endpoint
-- `ta.ts` - Technical analysis summary and ranking via scanner Recommend.All/Other/MA fields
-- `types.ts` - TypeScript interfaces for API requests/responses
+## 📰 فلتر الأخبار الاقتصادية (إلزامي)
+- ❌ ممنوع فتح صفقات قبل ساعتين وبعد ساعة من: **CPI / FOMC / NFP / PPI / GDP**
+- ⚠️ إذا كانت هناك صفقة مفتوحة وقت الخبر، أمّنها بـ Breakeven أو أغلقها
+- 📅 تحقق يومياً من تقويم الأخبار عبر: [forexfactory.com/calendar](https://www.forexfactory.com/calendar)
 
-**Tools** (`src/tools/`)
-- `screen.ts` - Stock/forex/crypto/ETF screening and symbol lookup. Contains `OPERATOR_MAP` for filter operators and `DEFAULT_COLUMNS`/`EXTENDED_COLUMNS` for response fields
-- `search.ts` - Symbol search tool wrapper (MCP + CLI)
-- `metainfo.ts` - Market metainfo tool wrapper
-- `ta.ts` - Technical analysis summary (`get_ta_summary`) and ranking (`rank_by_ta`) tool wrappers
-- `fields.ts` - Field metadata and listing (~100 fields across fundamental/technical/performance categories, for stock/etf/crypto/forex asset types)
+---
 
-**Resources** (`src/resources/`)
-- `presets.ts` - Pre-configured screening strategies (quality_stocks, value_stocks, dividend_stocks, momentum_stocks, growth_stocks, quality_growth_screener, quality_compounder, garp, deep_value, breakout_scanner, earnings_momentum, dividend_growth, macro_assets, market_indexes). Presets can be filter-based or symbol-based (for direct lookup)
+## 🤖 بروتوكول استجابة الذكاء الاصطناعي (عند طلب التحليل)
+عندما يطلب منك المستخدم (عن طريق TRADING VIEW CLAUDE MCP) مسح الشارت وتقييم فرصة البيتكوين، اتبع هذه الخطوات للرد:
 
-**Utilities** (`src/utils/`)
-- `cache.ts` - In-memory cache with TTL
-- `rateLimit.ts` - Token bucket rate limiter
-
-### MCP Tools Exposed
-1. `screen_stocks` - Screen stocks with filters
-2. `screen_forex` - Screen forex pairs
-3. `screen_crypto` - Screen cryptocurrencies
-4. `screen_etf` - Screen ETFs
-5. `lookup_symbols` - Direct symbol lookup (for indexes like TVC:SPX)
-6. `list_fields` - List available screening fields (`asset_type`: stock, forex, crypto, etf)
-7. `get_preset` / `list_presets` - Access pre-configured strategies
-8. `search_symbols` - Search for TradingView symbols by name/ticker/description
-9. `get_market_metainfo` - Get metadata about a market screener and available fields
-10. `get_ta_summary` - TradingView-style technical analysis summary with buy/sell/neutral labels
-11. `rank_by_ta` - Rank symbols by weighted TA scores across timeframes
-
-### Filter Operators
-`OPERATOR_MAP` in `src/tools/screen.ts` maps 18 MCP operators to TradingView API operations:
-- Numeric comparisons: `greater`, `less`, `greater_or_equal`, `less_or_equal`, `equal`, `not_equal`
-- Range: `in_range`, `not_in_range`
-- Cross-field: `crosses`, `crosses_above`, `crosses_below`
-- String: `match`
-- New (v2): `above_percent`, `below_percent`, `has`, `has_none_of`, `empty`, `not_empty`
-
-The `empty` and `not_empty` operators require no `value` property.
-
-### Data Flow
-1. Tool call received → validate input → check cache
-2. Convert MCP operators to TradingView operators via `OPERATOR_MAP`
-3. Rate limit → API request → format response → cache result
-
-## Configuration
-
-Environment variables (set in `.mcp.json`):
-- `CACHE_TTL_SECONDS` - Cache duration (default: 300)
-- `RATE_LIMIT_RPM` - Requests per minute (default: 10)
-
-## Testing
-
-Tests use Node's built-in test runner with tsx. Test files are in `src/tests/` with `.test.ts` suffix.
-
-## Adding New Features
-
-### New Field
-1. Add to `STOCK_FIELDS` in `src/tools/fields.ts` with name, label, category, type, description
-2. Optionally add to `EXTENDED_COLUMNS` in `src/tools/screen.ts`
-
-### New Preset
-Add to `PRESETS` in `src/resources/presets.ts` with filters array, markets, sort config, and optional custom columns.
-
-### New Tool
-1. Create implementation in `src/tools/`
-2. Register in `ListToolsRequestSchema` handler in `src/index.ts`
-3. Add case in `CallToolRequestSchema` handler
-
-### When to use each tool:
-- `search_symbols` — discover exact symbol identifiers before screening
-- `lookup_symbols` — get current data for known tickers (including indexes)
-- `screen_stocks/forex/crypto/etf` — find securities matching criteria
-- `get_ta_summary` — get technical consensus (buy/sell/neutral) for specific symbols
-- `rank_by_ta` — compare and rank symbols by multi-timeframe TA alignment
-- `get_market_metainfo` — discover available fields for a market
-- `list_fields` — browse field metadata by category
-
-## Claude Code Commands
-
-Project includes ready-to-use commands in `.claude/commands/`:
-- `/market-regime` - Analyze global market indexes relative to ATH
-- `/run-screener` - Interactive stock screening with preset strategies
-- `/smart-screen` - Auto-select best strategy based on current market regime and run it
-- `/macro-dashboard` - Multi-asset macro snapshot (US/global indexes, VIX, DXY, yields, gold, oil, crypto)
-- `/sector-rotation` - Cross-sector performance ranking across all 11 GICS sectors
-- `/due-diligence <SYMBOL>` - Structured due diligence report for a single stock
-- `/compare-peers <SYM1> <SYM2> ...` - Side-by-side comparison of 2–5 stocks
-- `/portfolio-risk <SYM1> <SYM2> ...` - Portfolio concentration and risk analysis
-- `/investment-thesis <SYMBOL>` - Data-driven investment thesis with bull/bear case
-
-See `.claude/commands/README.md` for full usage details and examples.
+1. **الرد يجب أن يكون منظماً باللغة العربية.**
+2. راجع بيانات فريم (1H) للاتجاه العام، ثم (15m) لمناطق السيولة، ثم (5m) لشموع التنفيذ.
+3. **أعطِ التقرير بالهيكلة التالية:**
+   - **الفرصة الحالية:** (🟢 دخول Long / 🔴 دخول Short / ⏳ لا توجد فرصة - انتظار تشكل فخ سيولة).
+   - **حالة الستوب والسيولة:** (وضح باختصار أي قاع/قمة تم ضربها وما هو وضع الفوليوم).
+   - **نقاط التنفيذ (في حال وجود فرصة):** 
+     - سعر الدخول: [...]
+     - وقف الخسارة: [...] (مع إثبات أن المسافة ≤ 0.8%).
+     - هدف TP1 (VWAP): [...]
+     - هدف نهاية الحركة TP2: [...]
+4. **ملاحظة الأمان الدائمة:** ذكّر المستخدم دائمًا باستخدام قواعد التريلينق والبريك إيفن (Breakeven).
